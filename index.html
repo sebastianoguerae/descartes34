@@ -5,6 +5,74 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Análisis de Inversión — Descartes 34, Anzures CDMX">
 <title>Descartes 34 — Análisis de Inversión Inmobiliaria</title>
+<style>
+#pwd-overlay {
+  position: fixed; inset: 0; z-index: 99999;
+  background: #0f1117;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 24px;
+}
+#pwd-overlay h1 {
+  color: #c9a84c;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 22px; font-weight: 600; letter-spacing: 0.5px;
+  margin: 0;
+}
+#pwd-overlay p {
+  color: #8888aa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px; margin: -12px 0 0;
+}
+#pwd-box {
+  display: flex; gap: 10px; align-items: center;
+}
+#pwd-input {
+  background: #1a1d2e; border: 1px solid #2a2d45;
+  color: #e8e8f0; padding: 12px 18px; border-radius: 8px;
+  font-size: 16px; outline: none; width: 200px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  transition: border-color 0.2s;
+}
+#pwd-input:focus { border-color: #c9a84c; }
+#pwd-input.error { border-color: #e05252; animation: shake 0.3s; }
+#pwd-btn {
+  background: #c9a84c; color: #0f1117; border: none;
+  padding: 12px 22px; border-radius: 8px; font-size: 15px;
+  font-weight: 700; cursor: pointer; transition: background 0.2s;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+#pwd-btn:hover { background: #e8c76a; }
+#pwd-error { color: #e05252; font-size: 13px; font-family: -apple-system, sans-serif; min-height: 18px; }
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+</style>
+<script>
+(function() {
+  if (sessionStorage.getItem('d34_auth') === 'ok') return;
+  document.addEventListener('DOMContentLoaded', function() {
+    var overlay = document.getElementById('pwd-overlay');
+    var input = document.getElementById('pwd-input');
+    var error = document.getElementById('pwd-error');
+    function check() {
+      if (input.value.toLowerCase().trim() === 'matilde') {
+        sessionStorage.setItem('d34_auth', 'ok');
+        overlay.style.display = 'none';
+      } else {
+        input.classList.add('error');
+        error.textContent = 'Clave incorrecta. Inténtalo de nuevo.';
+        setTimeout(function() { input.classList.remove('error'); }, 400);
+        input.value = ''; input.focus();
+      }
+    }
+    input.addEventListener('keydown', function(e) { if (e.key === 'Enter') check(); });
+    document.getElementById('pwd-btn').addEventListener('click', check);
+    input.focus();
+  });
+})();
+</script>
 <!-- print friendly -->
 <style media="print">
   nav, .obra-toggle-wrap { display: none !important; }
@@ -1335,6 +1403,16 @@
 </style>
 </head>
 <body>
+
+<div id="pwd-overlay">
+  <h1>Descartes 34 · Análisis de Inversión</h1>
+  <p>Documento confidencial</p>
+  <div id="pwd-box">
+    <input id="pwd-input" type="password" placeholder="Clave de acceso" autocomplete="off" />
+    <button id="pwd-btn">Entrar</button>
+  </div>
+  <div id="pwd-error"></div>
+</div>
 
 <!-- NAVIGATION -->
 <nav>
